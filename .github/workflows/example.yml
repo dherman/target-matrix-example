@@ -34,6 +34,15 @@ jobs:
       matrix:
         include: ${{ fromJson(needs.matrix.outputs.include) }}
     steps:
-      - name: Show Target
-        id: show
-        run: echo "${{ matrix.target }}"
+      - name: Setup Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+          override: true
+      - name: Build Artifact
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --target ${{ matrix.target }}
