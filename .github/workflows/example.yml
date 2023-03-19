@@ -16,7 +16,7 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      include: ${{ steps.define.include }}
+      include: "this should not be empty: ${{ steps.define.include }}"
     steps:
       - name: Define Cross-Compilation Target Matrix
         id: define
