@@ -29,13 +29,11 @@ jobs:
 
   build:
     needs: matrix
-    # runs-on: ${{ matrix.os }}
-    runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     include: ${{ toJson(needs.matrix.outputs.include) }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include: ${{ toJson(needs.matrix.outputs.include) }}
     steps:
       - name: Show Target
         id: show
-        # run: echo "${{ matrix.target }}"
-        run: echo "${{ needs.matrix.outputs.include }}"
+        run: echo "${{ matrix.target }}"
