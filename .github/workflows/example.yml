@@ -16,7 +16,7 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      include: "this should not be empty: ${{ steps.define.include }}"
+      include: ${{ steps.define.include }}
     steps:
       - name: Define Cross-Compilation Target Matrix
         id: define
@@ -38,4 +38,4 @@ jobs:
       - name: Show Target
         id: show
         # run: echo "${{ matrix.target }}"
-        run: echo "${{ needs.matrix.include }}"
+        run: echo "${{ needs.matrix.outputs.include }}"
