@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Define Cross-Compilation Target Matrix
         id: define
-        uses: dherman/target-matrix@v0.0.1
+        uses: dherman/target-matrix@v0.0.2
         with:
           toolchain: rust
           windows-latest: x86_64-pc-windows-msvc
