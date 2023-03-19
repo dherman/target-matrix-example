@@ -16,7 +16,7 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      include: ${{ steps.define.include }}
+      include: ${{ steps.define.outputs.include }}
     steps:
       - name: Define Cross-Compilation Target Matrix
         id: define
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     # strategy:
     #   matrix:
-    #     include: ${{ toJson(needs.matrix.include) }}
+    #     include: ${{ toJson(needs.matrix.outputs.include) }}
     steps:
       - name: Show Target
         id: show
