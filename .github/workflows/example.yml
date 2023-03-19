@@ -32,7 +32,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        include: ${{ needs.matrix.outputs.include }}
+        include: ${{ fromJson(needs.matrix.outputs.include) }}
     steps:
       - name: Show Target
         id: show
