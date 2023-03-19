@@ -32,7 +32,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        include: ${{ needs.matrix.include }}
+        include: ${{ toJson(needs.matrix.include) }}
     steps:
       - name: Show Target
         run: echo "${{ matrix.target }}"
