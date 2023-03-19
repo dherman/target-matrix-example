@@ -35,4 +35,5 @@ jobs:
         include: ${{ toJson(needs.matrix.include) }}
     steps:
       - name: Show Target
+        id: show
         run: echo "${{ matrix.target }}"
