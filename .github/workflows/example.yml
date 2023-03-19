@@ -40,9 +40,7 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
+      - name: Install cross-rs
+        run: cargo install cross
       - name: Build Artifact
-        uses: actions-rs/cargo@v1
-        with:
-          use-cross: true
-          command: build
-          args: --target ${{ matrix.target }}
+        run: cross build --target ${{ matrix.target }}
