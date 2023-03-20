@@ -50,7 +50,7 @@ jobs:
       - name: Build Artifact
         shell: bash
         run: |
-          cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics | jq -r 'select(.target != null).filenames[0] | sub(".*/target/"; "target/") | sub(".*\\target\\"; "target\\")' > artifact.log
+          cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics | jq -r 'select(.target != null).filenames[0] | sub(".*/target/"; "target/") | sub(".*\\\\target\\\\"; "target\\\\")' > artifact.log
           cat artifact.log
       - name: Create unix tarball
         shell: bash
