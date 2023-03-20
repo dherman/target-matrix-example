@@ -46,9 +46,12 @@ jobs:
         run: cargo install cross
       - name: Build Artifact
         shell: bash
-        run: cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics | jq -r "select(.reason==\"compiler-artifact\" and .target.name==\"super-duper-adder\").filenames[0] | sub(\".*/target/\"; \"target/\")" > artifact.log
+        run: |
+          cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics | jq -r "select(.reason==\"compiler-artifact\" and .target.name==\"super-duper-adder\").filenames[0] | sub(\".*/target/\"; \"target/\")" > artifact.log
+          cat artifact.log
       - name: Create unix tarball
-        if: not(startsWith(${{ matrix.os }}, 'windows'))
+        # if: not(startsWith(${{ matrix.os }}, 'windows'))
+        shell: bash
         run: |
           mkdir dist
           pwd
