@@ -50,6 +50,7 @@ jobs:
         if: not(startsWith(${{ matrix.os }}, 'windows'))
         run: |
           mkdir dist
+          ls -al "$(dirname $(cat artifact.log))"
           cp $(cat artifact.log) .
           tar czf "$(basename $(cat artifact.log)).tgz" "$(basename $(cat artifact.log))"
           rm "$(basename $(cat artifact.log))"
