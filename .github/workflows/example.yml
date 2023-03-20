@@ -43,7 +43,7 @@ jobs:
           target: ${{ matrix.target }}
           override: true
       - name: Install cross-rs
-        uses: actions-rs/install@v0.1
+        uses: actions-rs/install@v0.1.2
         with:
           crate: cross
           version: latest
