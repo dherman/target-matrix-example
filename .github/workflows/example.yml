@@ -50,6 +50,7 @@ jobs:
         if: not(startsWith(${{ matrix.os }}, 'windows'))
         run: |
           mkdir dist
+          pwd
           cat artifact.log
           ls -al "$(dirname $(cat artifact.log))"
           cp $(cat artifact.log) .
