@@ -18,10 +18,6 @@ jobs:
     outputs:
       include: ${{ steps.define.outputs.include }}
     steps:
-      - name: Print CWD
-        run: pwd
-      - name: Print Directory Contents
-        run: ls -al
       - name: Define Cross-Compilation Target Matrix
         id: define
         uses: dherman/target-matrix@v0.0.2
@@ -38,6 +34,8 @@ jobs:
       matrix:
         include: ${{ fromJson(needs.matrix.outputs.include) }}
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
       - name: Setup Toolchain
         uses: actions-rs/toolchain@v1
         with:
