@@ -52,10 +52,9 @@ jobs:
           mkdir dist
           pwd
           cat artifact.log
-          cat artifact.log | sed "s/.*target\\//target\\//"
-        # ls -al "$(dirname $(cat artifact.log))"
-        # cp $(cat artifact.log) .
-        # tar czf "$(basename $(cat artifact.log)).tgz" "$(basename $(cat artifact.log))"
-        # rm "$(basename $(cat artifact.log))"
-        # mv "$(basename $(cat artifact.log)).tgz" dist
-        # ls -al dist
+          ls -al "$(dirname $(cat artifact.log))"
+          cp $(cat artifact.log) .
+          tar czf "$(basename $(cat artifact.log)).tgz" "$(basename $(cat artifact.log))"
+          rm "$(basename $(cat artifact.log))"
+          mv "$(basename $(cat artifact.log)).tgz" dist
+          ls -al dist
