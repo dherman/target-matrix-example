@@ -57,8 +57,11 @@ jobs:
       - name: Create unix tarball
         shell: bash
         run: |
-          mkdir dist
           cp $(cat artifact.log) .
-          tar czf "$(basename $(cat artifact.log)).tgz" "$(basename $(cat artifact.log))"
+          tar czf libsuper-duper-adder.${{ matrix.target }}.tgz "$(basename $(cat artifact.log))"
           rm "$(basename $(cat artifact.log))"
-          mv "$(basename $(cat artifact.log)).tgz" dist
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: libsuper-duper-adder.${{ matrix.target }}.tgz
