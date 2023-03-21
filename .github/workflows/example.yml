@@ -51,24 +51,13 @@ jobs:
         run: |
           cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics > build.log
           cat build.log
-      - name: Extract artifact path (Windows)
-        if: runner.os == 'Windows'
+      - name: Extract artifact path
         shell: bash
         run: |
           # On Windows, cargo reports an absolute path with backslash separators.
-          cat build.log | jq -r 'select(.target != null).filenames[0] | gsub("\\\\"; "/") | sub(".*/target/"; "target/")' > artifact.log
-          cat artifact.log
-      - name: Extract artifact path (macOS)
-        if: runner.os == 'macOS'
-        run: |
           # On macOS, cargo reports an absolute path.
-          cat build.log | jq -r 'select(.target != null).filenames[0] | sub(".*/target/"; "target/")' > artifact.log
-          cat artifact.log
-      - name: Extract artifact path (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          # On Linux, cargo reports a relative path.
-          cat build.log | jq -r 'select(.target != null).filenames[0]' > artifact.log
+          # On Linux, cargo reports a relative path as if it were an absolute path.
+          cat build.log | jq -r 'select(.target != null).filenames[0] | gsub("\\\\"; "/") | sub(".*/target/"; "target/")' > artifact.log
           cat artifact.log
       - name: Create unix tarball
         run: |
