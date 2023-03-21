@@ -48,26 +48,17 @@ jobs:
           crate: cross
           version: latest
       - name: Build Artifact
-        run: |
-          cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics > build.log
-          cat build.log
+        run: cross build --target ${{ matrix.target }} --message-format=json-render-diagnostics > build.log
       - name: Extract artifact path
+        # Use bash even in Windows so the escaping and strings in this command work correctly.
         shell: bash
-        run: |
-          # On Windows, cargo reports an absolute path with backslash separators.
-          # On macOS, cargo reports an absolute path.
-          # On Linux, cargo reports a relative path as if it were an absolute path.
-          cat build.log | jq -r 'select(.target != null).filenames[0] | gsub("\\\\"; "/") | sub(".*/target/"; "target/")' > artifact.log
-          cat artifact.log
+        # Normalize path separators and strip any absolute path prefix.
+        run: cat build.log | jq -r 'select(.target != null).filenames[0] | gsub("\\\\"; "/") | sub(".*/target/"; "target/")' > artifact.log
       - name: Create unix tarball
         shell: bash
         run: |
           mkdir dist
-          pwd
-          cat artifact.log
-          ls -al "$(dirname $(cat artifact.log))"
           cp $(cat artifact.log) .
           tar czf "$(basename $(cat artifact.log)).tgz" "$(basename $(cat artifact.log))"
           rm "$(basename $(cat artifact.log))"
           mv "$(basename $(cat artifact.log)).tgz" dist
-          ls -al dist
