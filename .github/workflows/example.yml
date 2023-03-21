@@ -60,6 +60,7 @@ jobs:
           cat build.log | jq -r 'select(.target != null).filenames[0] | gsub("\\\\"; "/") | sub(".*/target/"; "target/")' > artifact.log
           cat artifact.log
       - name: Create unix tarball
+        shell: bash
         run: |
           mkdir dist
           pwd
