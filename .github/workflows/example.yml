@@ -60,6 +60,10 @@ jobs:
           cp $(cat artifact.log) .
           tar czf libsuper-duper-adder.${{ matrix.target }}.tgz "$(basename $(cat artifact.log))"
           rm "$(basename $(cat artifact.log))"
+      - name: Print out them refs
+        run: |
+          echo "github.ref=${{ github.ref }}"
+          echo "GITHUB_REF=$GITHUB_REF"
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
