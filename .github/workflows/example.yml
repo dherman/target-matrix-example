@@ -68,7 +68,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           # On Linux, cargo reports a relative path.
-          cat build.log | jq -r 'select(.target != null).filenames[0] > artifact.log
+          cat build.log | jq -r 'select(.target != null).filenames[0]' > artifact.log
           cat artifact.log
       - name: Create unix tarball
         run: |
