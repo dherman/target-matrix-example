@@ -6,6 +6,10 @@ on:
     branches:
       - main
       - next/*
+    tags:
+      - v*.*.*
+      - v*.*
+      - v*
   pull_request:
     types: [opened, synchronize, reopened, labeled]
     branches:
