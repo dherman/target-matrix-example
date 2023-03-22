@@ -64,15 +64,15 @@ jobs:
         shell: bash
         run: |
           cp $(cat artifact.log) .
-          tar czf libsuper-duper-adder.${{ matrix.target }}.tgz "$(basename $(cat artifact.log))"
+          tar czf libsuper-duper-adder.${{ matrix.target }}.tar.gz "$(basename $(cat artifact.log))"
           rm "$(basename $(cat artifact.log))"
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: libsuper-duper-adder.${{ matrix.target }}.tgz
+          files: libsuper-duper-adder.${{ matrix.target }}.tar.gz
 
-  dist:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
@@ -83,7 +83,16 @@ jobs:
       - name: Hello
         run: |
           echo "Now let's download '${{ steps.tagName.outputs.tag }}'"
-      # - name: Fetch releases
-      #   uses: robinraju/release-downloader@v1.7
-      #   with:
-      #     tag: 
+      - name: Fetch releases
+        uses: robinraju/release-downloader@v1.7
+        with:
+          tag: ${{ steps.tagName.outputs.tag }}
+          tarball: "*.tgz"
+          out-file-path: assets
+      - name: Create bundle
+        run: tar czf ../libsuper-duper-adder.tar.gz *.tar.gz
+        working-directory: assets
+      - name: Publish bundle
+        uses: softprops/action-gh-release@v1
+        with:
+          files: libsuper-duper-adder.tar.gz
