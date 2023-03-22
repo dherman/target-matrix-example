@@ -75,6 +75,8 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Get tag name
@@ -87,7 +89,7 @@ jobs:
         uses: robinraju/release-downloader@v1.7
         with:
           tag: ${{ steps.tagName.outputs.tag }}
-          tarball: "*.tgz"
+          fileName: "*.tar.gz"
           out-file-path: assets
       - name: Create bundle
         run: tar czf ../libsuper-duper-adder.tar.gz *.tar.gz
